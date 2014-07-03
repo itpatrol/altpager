@@ -1,0 +1,5 @@
+; $Id$
+name = Alternative Pager
+description = API for alternative pager. It is alternative view point on Pager functionality
+version = VERSION
+core = 6.x
