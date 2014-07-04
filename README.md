@@ -1,45 +1,29 @@
-altpager
+Alternative Pager
 ========
 
 Alternative Pager. API for alternative pager. It is alternative view point on Pager functionality
 
 
-Example:
+Example code or module "altpager_example":
 
-```
+```php
 <?php
 
-//is module available?
-if(module_exists('altpager')){
+$query = db_select('node', 'n')->extend('AltPager');
+$nids = $query
+  ->fields('n', array('nid', 'sticky', 'created'))
+  ->execute()
+  ->fetchAll();
+$pager = theme('altpager');
 
-//lets select some data
-  $sql='SELECT nid FROM node';
+$result = $pager;
 
-//generate pager  
-  $pagerCountShow=altpager_Show($sql);
-
-//get total count output  
-  $count = altpager_getCount();
-
-//let's collect result data  
-  $result = db_query_range($sql,array(),0,$count);
-  $output_nodes ='';
-  while ($n = db_fetch_object($result)) {
-    $n2 = node_load($n->nid);
-    $output_nodes .= theme('node', $n2, TRUE,FALSE);
-  }//while
-
-//output data
-  $output .= $pagerCountShow;
-  $output .= '<div class="nodes">';
-  $output .=  $output_nodes;
-  $output .= "</div>";
-  $output .= $pagerCountShow;
-  
-  echo $output;
+foreach ($nids as $row) {
+  $node = node_load($row->nid);
+  $result .= render(node_view($node));
 }
-?>
-```
 
-Output is:
-![alt tag](http://i61.tinypic.com/wbs7rb.png)
+$result .= theme('altpager');
+
+echo $result;
+```
