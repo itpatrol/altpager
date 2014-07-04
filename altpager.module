@@ -130,7 +130,6 @@ function theme_altpager_link($variables) {
 
 /**
  * Query extender for pager queries.
- *
  */
 class AltPager extends SelectQueryExtender {
 
