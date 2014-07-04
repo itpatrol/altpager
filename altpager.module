@@ -1,115 +1,179 @@
 <?php
-// $Id$
-/********************************************************************
- * Constants
- ********************************************************************/
-
-/********************************************************************
- * Drupal Hooks
- ********************************************************************/
-
 
 /**
- * Implementation of hook_theme()
+ * @file
+ * Alternative Pager.
+ *
+ * API for alternative pager. It is alternative view point on
+ * Pager functionality.
+ */
+
+// Global items count.
+$_altpager_items_count = 0;
+
+/**
+ * Implements hook_theme().
  */
 function altpager_theme() {
   return array(
-    'showPager' => array(
-      'arguments' => array('sql' => ''),
+    'altpager' => array(
+      'variables' => array(
+        'total' => 0,
+        'items' => '',
+      ),
+      'template' => 'altpager',
     ),
     'altpager_link' => array(
-      'arguments' => array('text' => NULL, 'count' => NULL),
+      'variables' => array(
+        'count' => 0,
+        'title' => '',
+      ),
     ),
-
   );
-};
-
-/********************************************************************
- * API Functions
- ********************************************************************/
-
-function altpager_getCount(){
-  if(isset($_REQUEST['apcount']) && $_REQUEST['apcount'] > 0 ){
-    return $_REQUEST['apcount'];
-  }
-  return 10;
 }
 
-function altpager_Show($sql='',$args=array(),$noreplace = 0){
-  if(empty($sql)){
-    drupal_set_message(t('showPager: SQL couldnot be empty'),'error');
-    return '';
-  }
+/**
+ * Default items count pager.
+ *
+ * @return array
+ *   Array list items.
+ */
+function altpager_default_items() {
+  global $_altpager_items_count;
 
-  return theme('showPager',$sql,$args,$noreplace);
+  return array(
+    10 => 10,
+    20 => 20,
+    50 => 50,
+    100 => 100,
+    200 => 200,
+    400 => 400,
+    600 => 600,
+    $_altpager_items_count => $_altpager_items_count,
+  );
 }
 
-/********************************************************************
- * Functions theme
- ********************************************************************/
-function theme_altpager_link($text,$count){
-  
-  $query=array();
-  $query[]='apcount='.$count;
-  
-  $querystring =  drupal_query_string_encode($_REQUEST, array_merge(array('q', 'apcount', 'pass'), array_keys($_COOKIE)));
-  if ($querystring != '') {
-    $query[] = $querystring;
+/**
+ * Count items viewed in current page.
+ *
+ * @return int|mixed
+ *   Count page viewed.
+ */
+function altpager_count_items() {
+  global $_altpager_items_count;
+
+  $default_items = altpager_default_items();
+  $min_count_items = key($default_items);
+
+  $count = isset($_GET['apcount']) ? (int) $_GET['apcount'] : $min_count_items;
+
+  if ($count > $_altpager_items_count || $count < 0) {
+    $count = $_altpager_items_count;
   }
-  
-  $current_count=10;
-  if(isset($_REQUEST['apcount'])){
-    $current_count = $_REQUEST['apcount'];
+
+  if (!in_array($count, $default_items)) {
+    $count = $min_count_items;
   }
-  
-  if($current_count == $count){
-    $output = '<li class="active">'.$text.'</li>';
-  }else{
-    $output = '<li>'.l($text, $_GET['q'], array('attributes' => $attributes, 'query' => count($query) ? implode('&', $query) : NULL)).'</li>';
-  }
-  return $output;
+
+  return $count;
 }
 
-function theme_showPager($sql='',$args=array(),$noreplace = 0){
-  drupal_add_css(drupal_get_path('module', 'altpager') .'/altpager.css');
-  
-  if($noreplace == 0){
-    $count_query = preg_replace(array('/SELECT.*?FROM /As', '/ORDER BY .*/'), array('SELECT COUNT(*) AS count FROM ', ''), $sql);
-  }else{
-    $count_query = $sql;
-  }
-  
-  $total=db_fetch_array(db_query($count_query,$args));
-  
-  $total=$total['count'];
-  $output ='';  
-  
-  if( 10 < $total){
+/**
+ * Process variables for altpager.tpl.php.
+ *
+ * The $variables array contains the following arguments:
+ * - $total: Count all items.
+ * - $items: Items for output.
+ *
+ * @see altpager.tpl.php
+ */
+function template_preprocess_altpager(&$variables) {
+  global $_altpager_items_count;
 
-    $items = array(
-      10 => 10,
-      20 => 20,
-      50 => 50,
-      100 => 100,
-      200 => 200,
-      400 => 400,
-      600 => 600,
-      $total => $total,
-    );
+  drupal_add_css(drupal_get_path('module', 'altpager') . '/altpager.css');
 
-    
-    $output='<div class="altpager"><ul>';
-    $output .= '<li class="prefix">'.t('Show').'</li>';
-    
-    foreach ($items as $count => $title){
-      if($count <= $total){
-        $output .= theme('altpager_link',$count,$title);
+  $variables['items'] = '';
+  $items = altpager_default_items();
+  $min_count = key($items);
+
+  if ($_altpager_items_count > $min_count) {
+    foreach ($items as $count => $title) {
+      if ($count <= $_altpager_items_count) {
+        $variables['items'] .= theme('altpager_link', array(
+          'count' => $count,
+          'title' => $title,
+        ));
       }
     }
-    $output .= '<li class="sufix">'.t('of !total records', array ('!total' => $total)).'</li>';
-    $output .= '</ul></div>';
-    
   }
-  return $output;
 
+  $variables['total'] = $_altpager_items_count;
+}
+
+/**
+ * Link theme.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - count: Count items viewed.
+ *   - text: Item title.
+ *
+ * @return string
+ *   Link.
+ */
+function theme_altpager_link($variables) {
+  $query = array();
+  $query['apcount'] = $variables['count'];
+
+  $exclude = array_merge(array('q', 'apcount', 'pass'), array_keys($_COOKIE));
+  $querystring = drupal_get_query_parameters($_GET, $exclude);
+
+  if (!empty($querystring)) {
+    $query = array_merge($querystring, $query);
+  }
+
+  $count_items = altpager_count_items();
+
+  if ($count_items == $variables['count']) {
+    $output = '<li class="active">' . $variables['title'] . '</li>';
+  }
+  else {
+    $output = '<li>' . l($variables['title'], $_GET['q'], array('query' => $query)) . '</li>';
+  }
+
+  return $output;
+}
+
+/**
+ * Query extender for pager queries.
+ */
+class AltPager extends SelectQueryExtender {
+
+  public function __construct(SelectQueryInterface $query, DatabaseConnection $connection) {
+    parent::__construct($query, $connection);
+
+    $this->addTag('altpager');
+  }
+
+  /**
+   * Override the execute method.
+   *
+   * Before we run the query, we need to add pager-based range() instructions
+   * to it.
+   */
+  public function execute() {
+    global $_altpager_items_count;
+
+    $_altpager_items_count = $this
+      ->query
+      ->countQuery()
+      ->execute()
+      ->fetchField();
+
+    $count_items = altpager_count_items();
+
+    $this->range(0, $count_items);
+
+    return $this->query->execute();
+  }
 }
