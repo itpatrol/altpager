@@ -1,4 +1,4 @@
-altpager
+Alternative Pager
 ========
 
 Alternative Pager. API for alternative pager. It is alternative view point on Pager functionality
