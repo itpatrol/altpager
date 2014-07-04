@@ -13,7 +13,7 @@
  */
 function altpager_theme() {
   return array(
-    'showPager' => array(
+    'show_pager' => array(
       'arguments' => array(
         'sql' => '',
       ),
@@ -31,7 +31,7 @@ function altpager_theme() {
  * API Functions.
  */
 
-function altpager_getCount() {
+function altpager_get_count() {
   if (isset($_REQUEST['apcount']) && $_REQUEST['apcount'] > 0) {
     return $_REQUEST['apcount'];
   }
@@ -39,13 +39,13 @@ function altpager_getCount() {
   return 10;
 }
 
-function altpager_Show($sql = '', $args = array(), $noreplace = 0) {
+function altpager_show($sql = '', $args = array(), $noreplace = 0) {
   if (empty($sql)) {
-    drupal_set_message(t('showPager: SQL couldnot be empty'), 'error');
+    drupal_set_message(t('show_pager: SQL couldnot be empty'), 'error');
     return '';
   }
 
-  return theme('showPager', $sql, $args, $noreplace);
+  return theme('show_pager', $sql, $args, $noreplace);
 }
 
 /**
@@ -77,7 +77,7 @@ function theme_altpager_link($text, $count) {
   return $output;
 }
 
-function theme_showPager($sql = '', $args = array(), $noreplace = 0) {
+function theme_show_pager($sql = '', $args = array(), $noreplace = 0) {
   drupal_add_css(drupal_get_path('module', 'altpager') . '/altpager.css');
 
   if ($noreplace == 0) {

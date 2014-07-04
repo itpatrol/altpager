@@ -18,10 +18,10 @@ if (module_exists('altpager')) {
   $output = '';
 
   // Generate pager.
-  $pagerCountShow = altpager_Show($sql);
+  $pagerCountShow = altpager_show($sql);
 
   // Get total count output.
-  $count = altpager_getCount();
+  $count = altpager_get_count();
 
   // Let's collect result data.
   $result = db_query_range($sql, array(), 0, $count);

@@ -29,10 +29,10 @@ function altpager_example_page() {
     $output = '';
 
     // Generate pager.
-    $pager_count_show = altpager_Show($sql);
+    $pager_count_show = altpager_show($sql);
 
     // Get total count output.
-    $count = altpager_getCount();
+    $count = altpager_get_count();
 
     // Let's collect result data.
     $result = db_query_range($sql, array(), 0, $count);
