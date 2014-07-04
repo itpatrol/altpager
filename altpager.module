@@ -8,11 +8,17 @@ $altpager_page_count = 0;
  */
 function altpager_theme() {
   return array(
-    'altpager' => array(),
+    'altpager' => array(
+      'variables' => array(
+        'total' => 0,
+        'items' => '',
+      ),
+      'template' => 'altpager',
+    ),
     'altpager_link' => array(
       'variables' => array(
         'count' => 0,
-        'text' => '',
+        'title' => '',
       ),
     ),
   );
@@ -69,30 +75,27 @@ function altpager_count_items() {
  *
  * @return string
  */
-function theme_altpager() {
+function template_preprocess_altpager(&$variables) {
   global $altpager_page_count;
 
   drupal_add_css(drupal_get_path('module', 'altpager') . '/altpager.css');
 
-  $output = '';
+  $variables['items'] = '';
   $items = altpager_default_items();
   $min_count = key($items);
 
   if ($altpager_page_count > $min_count) {
-    $output = '<div class="altpager"><ul>';
-    $output .= '<li class="prefix">' . t('Show') . '</li>';
-
     foreach ($items as $count => $title) {
       if ($count <= $altpager_page_count) {
-        $output .= theme('altpager_link', array('count' => $count, 'text' => $title));
+        $variables['items'] .= theme('altpager_link', array(
+          'count' => $count,
+          'title' => $title,
+        ));
       }
     }
-
-    $output .= '<li class="sufix">' . t('of !total records', array ('!total' => $altpager_page_count)) . '</li>';
-    $output .= '</ul></div>';
   }
 
-  return $output;
+  $variables['total'] = $altpager_page_count;
 }
 
 /**
@@ -110,7 +113,7 @@ function theme_altpager_link($variables) {
   $query = array();
   $query['apcount'] = $variables['count'];
 
-  $querystring =  drupal_get_query_parameters($_GET, array_merge(array('q', 'apcount', 'pass'), array_keys($_COOKIE)));
+  $querystring = drupal_get_query_parameters($_GET, array_merge(array('q', 'apcount', 'pass'), array_keys($_COOKIE)));
 
   if (!empty($querystring)) {
     $query = array_merge($querystring, $query);
@@ -119,10 +122,10 @@ function theme_altpager_link($variables) {
   $count_items = altpager_count_items();
 
   if ($count_items == $variables['count']) {
-    $output = '<li class="active">' . $variables['text'] . '</li>';
+    $output = '<li class="active">' . $variables['title'] . '</li>';
   }
   else {
-    $output = '<li>' . l($variables['text'], $_GET['q'], array('query' => $query)) . '</li>';
+    $output = '<li>' . l($variables['title'], $_GET['q'], array('query' => $query)) . '</li>';
   }
 
   return $output;
