@@ -70,10 +70,14 @@ function altpager_count_items() {
   return $count;
 }
 
-/**
- * Theme for viewed altpager.
+/*
+ * Process variables for altpager.tpl.php.
  *
- * @return string
+ * The $variables array contains the following arguments:
+ * - $total: Count all items.
+ * - $items: Items for output.
+ *
+ * @see altpager.tpl.php
  */
 function template_preprocess_altpager(&$variables) {
   global $altpager_page_count;
