@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Alternative Pager ( Example ).
+ *
+ * Example work module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function altpager_example_menu() {
+  $items['altpager_example'] = array(
+    'title' => 'Alternative Pager',
+    'page callback' => 'altpager_example_page',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Example page.
+ */
+function altpager_example_page() {
+  if (module_exists('altpager')) {
+    $sql = 'SELECT nid FROM {node}';
+    $output = '';
+
+    // Generate pager.
+    $pager_count_show = altpager_Show($sql);
+
+    // Get total count output.
+    $count = altpager_getCount();
+
+    // Let's collect result data.
+    $result = db_query_range($sql, array(), 0, $count);
+
+    $output_nodes ='';
+    while ($node = db_fetch_object($result)) {
+      $n2 = node_load($node->nid);
+      $output_nodes .= theme('node', $n2, TRUE, FALSE);
+    }
+
+    // Output data.
+    $output .= $pager_count_show;
+    $output .= '<div class="nodes">';
+    $output .=  $output_nodes;
+    $output .= '</div>';
+    $output .= $pager_count_show;
+
+    return $output;
+  }
+}
