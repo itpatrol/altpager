@@ -1,41 +1,44 @@
 Alternative Pager
 ========
 
-Alternative Pager. API for alternative pager. It is alternative view point on Pager functionality
+Alternative Pager. API for alternative pager. It is alternative view point on
+Pager functionality
 
 
 Example:
 
-```
+```php
 <?php
 
-//is module available?
-if(module_exists('altpager')){
+// Is module available?
+if (module_exists('altpager')) {
 
-//lets select some data
-  $sql='SELECT nid FROM node';
+  // Lets select some data.
+  $sql = 'SELECT nid FROM {node}';
+  $output = '';
 
-//generate pager  
-  $pagerCountShow=altpager_Show($sql);
+  // Generate pager.
+  $pager_count_show = altpager_show($sql);
 
-//get total count output  
-  $count = altpager_getCount();
+  // Get total count output.
+  $count = altpager_get_count();
 
-//let's collect result data  
-  $result = db_query_range($sql,array(),0,$count);
-  $output_nodes ='';
+  // Let's collect result data.
+  $result = db_query_range($sql, array(), 0, $count);
+  $output_nodes = '';
+
   while ($n = db_fetch_object($result)) {
     $n2 = node_load($n->nid);
-    $output_nodes .= theme('node', $n2, TRUE,FALSE);
+    $output_nodes .= theme('node', $n2, TRUE, FALSE);
   }//while
 
-//output data
-  $output .= $pagerCountShow;
+  // Output data.
+  $output .= $pager_count_show;
   $output .= '<div class="nodes">';
-  $output .=  $output_nodes;
-  $output .= "</div>";
-  $output .= $pagerCountShow;
-  
+  $output .= $output_nodes;
+  $output .= '</div>';
+  $output .= $pager_count_show;
+
   echo $output;
 }
 ?>
