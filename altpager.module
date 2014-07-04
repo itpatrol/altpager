@@ -48,19 +48,20 @@ function altpager_default_items() {
 function altpager_count_items() {
   global $altpager_page_count;
 
-  $start = isset($_GET['apcount']) ? (int) $_GET['apcount'] : $altpager_page_count;
-
-  if ($start > $altpager_page_count || $start < 0) {
-    $start = $altpager_page_count;
-  }
-
   $default_items = altpager_default_items();
+  $min_count_items = key($default_items);
 
-  if (!in_array($start, $default_items)) {
-    $start = key($default_items);
+  $count = isset($_GET['apcount']) ? (int) $_GET['apcount'] : $min_count_items;
+
+  if ($count > $altpager_page_count || $count < 0) {
+    $count = $altpager_page_count;
   }
 
-  return $start;
+  if (!in_array($count, $default_items)) {
+    $count = $min_count_items;
+  }
+
+  return $count;
 }
 
 /**
