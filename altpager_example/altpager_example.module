@@ -25,7 +25,7 @@ function altpager_example_menu() {
  */
 function altpager_example_page() {
   if (module_exists('altpager')) {
-    $sql = 'SELECT nid FROM {node} as n ';
+    $sql = 'SELECT nid FROM {node}';
     $output = '';
 
     // Generate pager.
