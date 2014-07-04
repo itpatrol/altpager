@@ -18,7 +18,7 @@ if (module_exists('altpager')) {
   $output = '';
 
   // Generate pager.
-  $pagerCountShow = altpager_show($sql);
+  $pager_count_show = altpager_show($sql);
 
   // Get total count output.
   $count = altpager_get_count();
@@ -33,11 +33,11 @@ if (module_exists('altpager')) {
   }//while
 
   // Output data.
-  $output .= $pagerCountShow;
+  $output .= $pager_count_show;
   $output .= '<div class="nodes">';
   $output .= $output_nodes;
   $output .= '</div>';
-  $output .= $pagerCountShow;
+  $output .= $pager_count_show;
 
   echo $output;
 }
