@@ -1,91 +1,98 @@
 <?php
-// $Id$
-/********************************************************************
- * Constants
- ********************************************************************/
-
-/********************************************************************
- * Drupal Hooks
- ********************************************************************/
-
 
 /**
- * Implementation of hook_theme()
+ * Constants.
+ */
+
+/**
+ * Drupal Hooks.
+ */
+
+/**
+ * Implements hook_theme().
  */
 function altpager_theme() {
   return array(
     'showPager' => array(
-      'arguments' => array('sql' => ''),
+      'arguments' => array(
+        'sql' => '',
+      ),
     ),
     'altpager_link' => array(
-      'arguments' => array('text' => NULL, 'count' => NULL),
+      'arguments' => array(
+        'text' => NULL,
+        'count' => NULL,
+      ),
     ),
-
   );
 };
 
-/********************************************************************
- * API Functions
- ********************************************************************/
+/**
+ * API Functions.
+ */
 
-function altpager_getCount(){
-  if(isset($_REQUEST['apcount']) && $_REQUEST['apcount'] > 0 ){
+function altpager_getCount() {
+  if (isset($_REQUEST['apcount']) && $_REQUEST['apcount'] > 0) {
     return $_REQUEST['apcount'];
   }
+
   return 10;
 }
 
-function altpager_Show($sql='',$args=array(),$noreplace = 0){
-  if(empty($sql)){
-    drupal_set_message(t('showPager: SQL couldnot be empty'),'error');
+function altpager_Show($sql = '', $args = array(), $noreplace = 0) {
+  if (empty($sql)) {
+    drupal_set_message(t('showPager: SQL couldnot be empty'), 'error');
     return '';
   }
 
-  return theme('showPager',$sql,$args,$noreplace);
+  return theme('showPager', $sql, $args, $noreplace);
 }
 
-/********************************************************************
- * Functions theme
- ********************************************************************/
-function theme_altpager_link($text,$count){
-  
-  $query=array();
-  $query[]='apcount='.$count;
-  
-  $querystring =  drupal_query_string_encode($_REQUEST, array_merge(array('q', 'apcount', 'pass'), array_keys($_COOKIE)));
+/**
+ * Functions theme.
+ */
+
+function theme_altpager_link($text, $count) {
+  $query = array();
+  $query[] = 'apcount=' . $count;
+
+  $exclude = array_merge(array('q', 'apcount', 'pass'), array_keys($_COOKIE));
+  $querystring = drupal_query_string_encode($_REQUEST, $exclude);
   if ($querystring != '') {
     $query[] = $querystring;
   }
-  
-  $current_count=10;
-  if(isset($_REQUEST['apcount'])){
+
+  $current_count = 10;
+  if (isset($_REQUEST['apcount'])) {
     $current_count = $_REQUEST['apcount'];
   }
-  
-  if($current_count == $count){
-    $output = '<li class="active">'.$text.'</li>';
-  }else{
-    $output = '<li>'.l($text, $_GET['q'], array('attributes' => $attributes, 'query' => count($query) ? implode('&', $query) : NULL)).'</li>';
+
+  if ($current_count == $count) {
+    $output = '<li class="active">' . $text . '</li>';
   }
+  else {
+    $output = '<li>' . l($text, $_GET['q'], array('query' => count($query) ? implode('&', $query) : NULL)) . '</li>';
+  }
+
   return $output;
 }
 
-function theme_showPager($sql='',$args=array(),$noreplace = 0){
-  drupal_add_css(drupal_get_path('module', 'altpager') .'/altpager.css');
-  
-  if($noreplace == 0){
+function theme_showPager($sql = '', $args = array(), $noreplace = 0) {
+  drupal_add_css(drupal_get_path('module', 'altpager') . '/altpager.css');
+
+  if ($noreplace == 0) {
     $count_query = preg_replace(array('/SELECT.*?FROM /As', '/ORDER BY .*/'), array('SELECT COUNT(*) AS count FROM ', ''), $sql);
-  }else{
+  }
+  else {
     $count_query = $sql;
   }
-  
-  $total=db_fetch_array(db_query($count_query,$args));
-  
-  $total=$total['count'];
-  $output ='';  
-  
-  if( 10 < $total){
 
+  $total = db_fetch_array(db_query($count_query, $args));
+  $total = $total['count'];
+
+  $output = '';
+
+  if (10 < $total) {
     $items = array(
       10 => 10,
       20 => 20,
@@ -97,19 +104,19 @@ function theme_showPager($sql='',$args=array(),$noreplace = 0){
       $total => $total,
     );
 
-    
-    $output='<div class="altpager"><ul>';
-    $output .= '<li class="prefix">'.t('Show').'</li>';
-    
-    foreach ($items as $count => $title){
-      if($count <= $total){
-        $output .= theme('altpager_link',$count,$title);
+    $output = '<div class="altpager"><ul>';
+    $output .= '<li class="prefix">' . t('Show') . '</li>';
+
+    foreach ($items as $count => $title) {
+      if ($count <= $total) {
+        $output .= theme('altpager_link', $count, $title);
       }
     }
-    $output .= '<li class="sufix">'.t('of !total records', array ('!total' => $total)).'</li>';
-    $output .= '</ul></div>';
-    
-  }
-  return $output;
 
+    $output .= '<li class="sufix">' . t('of !total records', array('!total' => $total)) . '</li>';
+    $output .= '</ul></div>';
+
+  }
+
+  return $output;
 }

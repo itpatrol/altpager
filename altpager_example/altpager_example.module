@@ -37,7 +37,7 @@ function altpager_example_page() {
     // Let's collect result data.
     $result = db_query_range($sql, array(), 0, $count);
 
-    $output_nodes ='';
+    $output_nodes = '';
     while ($node = db_fetch_object($result)) {
       $n2 = node_load($node->nid);
       $output_nodes .= theme('node', $n2, TRUE, FALSE);
@@ -46,7 +46,7 @@ function altpager_example_page() {
     // Output data.
     $output .= $pager_count_show;
     $output .= '<div class="nodes">';
-    $output .=  $output_nodes;
+    $output .= $output_nodes;
     $output .= '</div>';
     $output .= $pager_count_show;
 
