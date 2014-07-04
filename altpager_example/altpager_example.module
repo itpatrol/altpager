@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * @file
+ * Alternative Pager ( Example ).
+ *
+ * Example work module.
+ */
+
+/**
  * Implements hook_menu().
  */
 function altpager_example_menu() {

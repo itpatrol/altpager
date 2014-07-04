@@ -1,7 +1,8 @@
 Alternative Pager
 ========
 
-Alternative Pager. API for alternative pager. It is alternative view point on Pager functionality
+Alternative Pager. API for alternative pager. It is alternative view point on
+Pager functionality
 
 
 Example code or module "altpager_example":

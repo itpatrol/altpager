@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * @file
+ * Alternative Pager.
+ *
+ * API for alternative pager. It is alternative view point on
+ * Pager functionality.
+ */
+
 // Global items count.
-$altpager_page_count = 0;
+$_altpager_items_count = 0;
 
 /**
  * Implements hook_theme().
@@ -31,7 +39,7 @@ function altpager_theme() {
  *   Array list items.
  */
 function altpager_default_items() {
-  global $altpager_page_count;
+  global $_altpager_items_count;
 
   return array(
     10 => 10,
@@ -41,7 +49,7 @@ function altpager_default_items() {
     200 => 200,
     400 => 400,
     600 => 600,
-    $altpager_page_count => $altpager_page_count,
+    $_altpager_items_count => $_altpager_items_count,
   );
 }
 
@@ -52,15 +60,15 @@ function altpager_default_items() {
  *   Count page viewed.
  */
 function altpager_count_items() {
-  global $altpager_page_count;
+  global $_altpager_items_count;
 
   $default_items = altpager_default_items();
   $min_count_items = key($default_items);
 
   $count = isset($_GET['apcount']) ? (int) $_GET['apcount'] : $min_count_items;
 
-  if ($count > $altpager_page_count || $count < 0) {
-    $count = $altpager_page_count;
+  if ($count > $_altpager_items_count || $count < 0) {
+    $count = $_altpager_items_count;
   }
 
   if (!in_array($count, $default_items)) {
@@ -70,7 +78,7 @@ function altpager_count_items() {
   return $count;
 }
 
-/*
+/**
  * Process variables for altpager.tpl.php.
  *
  * The $variables array contains the following arguments:
@@ -80,7 +88,7 @@ function altpager_count_items() {
  * @see altpager.tpl.php
  */
 function template_preprocess_altpager(&$variables) {
-  global $altpager_page_count;
+  global $_altpager_items_count;
 
   drupal_add_css(drupal_get_path('module', 'altpager') . '/altpager.css');
 
@@ -88,9 +96,9 @@ function template_preprocess_altpager(&$variables) {
   $items = altpager_default_items();
   $min_count = key($items);
 
-  if ($altpager_page_count > $min_count) {
+  if ($_altpager_items_count > $min_count) {
     foreach ($items as $count => $title) {
-      if ($count <= $altpager_page_count) {
+      if ($count <= $_altpager_items_count) {
         $variables['items'] .= theme('altpager_link', array(
           'count' => $count,
           'title' => $title,
@@ -99,13 +107,13 @@ function template_preprocess_altpager(&$variables) {
     }
   }
 
-  $variables['total'] = $altpager_page_count;
+  $variables['total'] = $_altpager_items_count;
 }
 
 /**
  * Link theme.
  *
- * @param $variables
+ * @param array $variables
  *   An associative array containing:
  *   - count: Count items viewed.
  *   - text: Item title.
@@ -117,7 +125,8 @@ function theme_altpager_link($variables) {
   $query = array();
   $query['apcount'] = $variables['count'];
 
-  $querystring = drupal_get_query_parameters($_GET, array_merge(array('q', 'apcount', 'pass'), array_keys($_COOKIE)));
+  $exclude = array_merge(array('q', 'apcount', 'pass'), array_keys($_COOKIE));
+  $querystring = drupal_get_query_parameters($_GET, $exclude);
 
   if (!empty($querystring)) {
     $query = array_merge($querystring, $query);
@@ -153,9 +162,9 @@ class AltPager extends SelectQueryExtender {
    * to it.
    */
   public function execute() {
-    global $altpager_page_count;
+    global $_altpager_items_count;
 
-    $altpager_page_count = $this
+    $_altpager_items_count = $this
       ->query
       ->countQuery()
       ->execute()
