@@ -1,6 +1,6 @@
 <?php
 
-// Global page count.
+// Global items count.
 $altpager_page_count = 0;
 
 /**
