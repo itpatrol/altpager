@@ -40,3 +40,6 @@ if(module_exists('altpager')){
 }
 ?>
 ```
+
+Output is:
+![alt tag](http://i61.tinypic.com/wbs7rb.png)
