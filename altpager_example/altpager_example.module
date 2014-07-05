@@ -26,9 +26,11 @@ function altpager_example_menu() {
 function altpager_example_page() {
   $query = db_select('node', 'n')->extend('AltPager');
   $nids = $query
-    ->fields('n', array('nid', 'sticky', 'created'))
+    ->fields('n', array('nid'))
+    ->orderBy('created', 'DESC')
     ->execute()
     ->fetchAll();
+
   $pager = theme('altpager');
 
   $result = $pager;
