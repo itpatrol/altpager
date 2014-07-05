@@ -28,3 +28,6 @@ $result .= theme('altpager');
 
 echo $result;
 ```
+Output is:
+------
+![alt tag](http://i59.tinypic.com/55ou95.png)
