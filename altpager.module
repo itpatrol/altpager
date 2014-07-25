@@ -56,7 +56,8 @@ function altpager_default_items() {
  * @param mixed $count
  *   Count all items.
  *
- * @return bool
+ * @return int
+ *   Count items.
  */
 function altpager_count_all_items($count = FALSE) {
   static $items_count;
