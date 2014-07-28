@@ -24,6 +24,12 @@ function altpager_example_menu() {
  * Example page.
  */
 function altpager_example_page() {
+  altpager_items_elements(array(
+    1 => 1,
+    2 => 2,
+    5 => 5,
+  ));
+
   $query = db_select('node', 'n')->extend('AltPager');
   $nids = $query
     ->fields('n', array('nid'))

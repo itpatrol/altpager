@@ -1,3 +1,4 @@
 name = Alternative Pager
 description = API for alternative pager. It is alternative view point on Pager functionality.
 core = 7.x
+files[] = altpager.test
