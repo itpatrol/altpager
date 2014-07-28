@@ -23,13 +23,49 @@ class AltpagerTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Testing the standard list of the quantity limitations output nodes.
+   * The main test module.
    */
   public function testAltpager() {
-    altpager_count_all_items(1000);
+    $query = db_select('node', 'n')->extend('AltPager');
+    $nids_count = $query
+      ->fields('n', array('nid'))
+      ->orderBy('created', 'DESC')
+      ->execute()
+      ->rowCount();
 
+    $default_items = altpager_default_items();
+    $min_count_items = key($default_items);
+
+    $this->assertTrue($nids_count <= $min_count_items);
+
+    next($default_items);
+    $min_count_items = key($default_items);
+
+    for ($i = 0; $i <= $min_count_items; ++$i) {
+      $this->drupalCreateNode();
+    }
+
+    altpager_apcount($min_count_items);
+
+    $query = db_select('node', 'n')->extend('AltPager');
+    $nids_count = $query
+      ->fields('n', array('nid'))
+      ->orderBy('created', 'DESC')
+      ->execute()
+      ->rowCount();
+
+    $this->assertEqual($min_count_items, $nids_count);
+  }
+
+  /**
+   * Testing the standard list of the quantity limitations output nodes.
+   */
+  public function testAltpagerDefaultItems() {
+    $max_items = 1000;
+
+    altpager_count_all_items($max_items);
     $items = altpager_default_items();
 
-    $this->assertEqual(end($items), 1000);
+    $this->assertEqual(end($items), $max_items);
   }
 }
