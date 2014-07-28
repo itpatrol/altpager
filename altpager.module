@@ -38,16 +38,41 @@ function altpager_theme() {
 function altpager_default_items() {
   $max_count = altpager_count_all_items();
 
-  return array(
-    10 => 10,
-    20 => 20,
-    50 => 50,
-    100 => 100,
-    200 => 200,
-    400 => 400,
-    600 => 600,
-    $max_count => $max_count,
-  );
+  $items = altpager_items_elements();
+  $items[$max_count] = $max_count;
+
+  return $items;
+}
+
+/**
+ * Get/Set default values ​​for the number output node.
+ *
+ * @param array $items
+ *   Array with options amount of output nodes.
+ *
+ * @return array
+ *   List elements.
+ */
+function altpager_items_elements($items = array()) {
+  static $my_items;
+
+  if ($items) {
+    $my_items = $items;
+  }
+
+  if (!$my_items) {
+    $my_items = array(
+      10 => 10,
+      20 => 20,
+      50 => 50,
+      100 => 100,
+      200 => 200,
+      400 => 400,
+      600 => 600,
+    );
+  }
+
+  return $my_items;
 }
 
 /**
