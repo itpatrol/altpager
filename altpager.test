@@ -98,4 +98,12 @@ class AltpagerTestCase extends DrupalWebTestCase {
     $count = altpager_count_items_viewed();
     $this->assertEqual($min_count_items, $count);
   }
+
+  /**
+   * Testing function get count node viewed.
+   */
+  public function testAltpagerApcount() {
+    altpager_apcount(25);
+    $this->assertEqual(altpager_apcount(), 25);
+  }
 }
