@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Tests for altpager.module.
+ */
+
+/**
+ * Test the module functions.
+ */
+class AltpagerTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Functional testing',
+      'description' => 'Test functions altpager.module.',
+      'group' => 'Altpager',
+    );
+  }
+
+  public function setUp() {
+    parent::setUp(array('altpager'));
+  }
+
+  /**
+   * Testing the standard list of the quantity limitations output nodes.
+   */
+  public function testAltpager() {
+    altpager_count_all_items(1000);
+
+    $items = altpager_default_items();
+
+    $this->assertEqual(end($items), 1000);
+  }
+}
