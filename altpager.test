@@ -68,4 +68,34 @@ class AltpagerTestCase extends DrupalWebTestCase {
 
     $this->assertEqual(end($items), $max_items);
   }
+
+  /**
+   * Testing count items viewed in current page.
+   */
+  public function testAltpagerCountItemsViewed() {
+    altpager_count_all_items(1000);
+
+    $count = altpager_count_items_viewed();
+
+    $default_items = altpager_default_items();
+    next($default_items);
+    $min_count_items = key($default_items);
+
+    $this->assertEqual($min_count_items, $count);
+
+    // No such values​​, the minimum value is selected.
+    altpager_apcount(25);
+    $count = altpager_count_items_viewed();
+
+    // The first value in the list.
+    prev($default_items);
+    $min_count_items = key($default_items);
+
+    $this->assertEqual($min_count_items, $count);
+
+    // Change the value "apcount".
+    altpager_apcount(10);
+    $count = altpager_count_items_viewed();
+    $this->assertEqual($min_count_items, $count);
+  }
 }
