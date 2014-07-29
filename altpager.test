@@ -106,4 +106,29 @@ class AltpagerTestCase extends DrupalWebTestCase {
     altpager_apcount(25);
     $this->assertEqual(altpager_apcount(), 25);
   }
+
+  /**
+   * Testing function altpager_items_elements().
+   */
+  public function testAltpagerItemsElements() {
+    altpager_items_elements(array(
+      1 => 1,
+      2 => 2,
+      5 => 5,
+    ));
+
+    $this->drupalCreateNode();
+
+    $default_items = altpager_default_items();
+
+    $query = db_select('node', 'n')->extend('AltPager');
+    $nids_count = $query
+      ->fields('n', array('nid'))
+      ->execute()
+      ->rowCount();
+
+    $min_count_items = key($default_items);
+
+    $this->assertEqual($min_count_items, $nids_count);
+  }
 }
