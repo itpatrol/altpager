@@ -16,11 +16,11 @@
  */
 ?>
 <?php if (!empty($items)): ?>
-<div class="altpager">
-  <ul>
-    <li class="prefix"><?php print t('Show'); ?></li>
-    <?php print $items; ?>
-    <li class="suffix"><?php print t('of !total records', array('!total' => $total)); ?></li>
-  </ul>
-</div>
+  <div class="altpager">
+    <ul>
+      <li class="prefix"><?php print t('Show'); ?></li>
+      <?php print $items; ?>
+      <li class="suffix"><?php print t('of !total records', array('!total' => $total)); ?></li>
+    </ul>
+  </div>
 <?php endif; ?>
