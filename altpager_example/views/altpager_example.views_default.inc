@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * @file
+ */
+
+/**
  * Implements hook_views_default_views().
  */
 function altpager_example_views_default_views() {

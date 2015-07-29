@@ -10,6 +10,9 @@
  */
 class AltPager extends SelectQueryExtender {
 
+  /**
+   *
+   */
   public function __construct(SelectQueryInterface $query, DatabaseConnection $connection) {
     parent::__construct($query, $connection);
 
@@ -37,4 +40,5 @@ class AltPager extends SelectQueryExtender {
 
     return $this->query->execute();
   }
+
 }
