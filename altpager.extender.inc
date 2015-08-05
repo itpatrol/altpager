@@ -40,4 +40,5 @@ class AltPager extends SelectQueryExtender {
 
     return $this->query->execute();
   }
+
 }
