@@ -1,16 +1,14 @@
 div.altpager {
   text-align: right;
-  padding: 5px 0;
+  padding:5px 0;
 }
-
 div.altpager ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 div.altpager ul li {
-  display: inline;
+  display:inline;
   padding: 2px 5px;
 }
 
