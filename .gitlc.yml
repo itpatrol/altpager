@@ -1,2 +1,2 @@
 coding_standards:
-  name: [codespell,drupal,drupalpractice]
+  name: [codespell, drupal, drupalpractice, drupalsecure]
