@@ -6,7 +6,6 @@
  *
  * @ingroup views_pager_plugins
  */
-
 class views_plugin_pager_altpager extends views_plugin_pager_mini {
 
   /**

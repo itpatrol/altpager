@@ -2,13 +2,11 @@ div.altpager {
   text-align: right;
   padding: 5px 0;
 }
-
 div.altpager ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 div.altpager ul li {
   display: inline;
   padding: 2px 5px;
@@ -20,10 +18,10 @@ div.altpager ul li.active {
   border-bottom: 1px solid #ccc;
 }
 
-div.altpager ul li  a {
+div.altpager ul li a {
   text-decoration: none;
 }
 
-div.altpager ul li  a:hover {
+div.altpager ul li a:hover {
   color: green;
 }

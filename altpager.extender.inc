@@ -11,7 +11,7 @@
 class AltPager extends SelectQueryExtender {
 
   /**
-   *
+   * Constructor. AddTag for Altpager Extension.
    */
   public function __construct(SelectQueryInterface $query, DatabaseConnection $connection) {
     parent::__construct($query, $connection);
