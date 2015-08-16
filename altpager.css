@@ -13,8 +13,8 @@ div.altpager ul li {
 }
 
 div.altpager ul li.active {
-  color: green;
-  font-weight: bold;
+  color:green;
+  font-weight:bold;
   border-bottom: 1px solid #ccc;
 }
 
