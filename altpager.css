@@ -5,18 +5,18 @@ div.altpager {
 
 div.altpager ul {
   list-style: none;
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
 }
 
 div.altpager ul li {
-  display:inline;
-  padding:2px 5px;
+  display: inline;
+  padding: 2px 5px;
 }
 
 div.altpager ul li.active {
-  color:green;
-  font-weight:bold;
+  color: green;
+  font-weight: bold;
   border-bottom: 1px solid #ccc;
 }
 
