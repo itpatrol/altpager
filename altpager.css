@@ -5,8 +5,8 @@ div.altpager {
 
 div.altpager ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding:0;
+  margin:0;
 }
 
 div.altpager ul li {
@@ -25,5 +25,5 @@ div.altpager ul li a {
 }
 
 div.altpager ul li a:hover {
-  color:green;
+  color: green;
 }
