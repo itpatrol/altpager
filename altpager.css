@@ -1,6 +1,6 @@
 div.altpager {
-  text-align:right;
-  padding:5px 0;
+  text-align: right;
+  padding: 5px 0;
 }
 
 div.altpager ul {
@@ -25,5 +25,5 @@ div.altpager ul li a {
 }
 
 div.altpager ul li a:hover {
-  color: green;
+  color:green;
 }
