@@ -1,2 +1,2 @@
 code_style:
-  name: [codespell,drupal,drupalpractice]
+  default: [codespell,drupal,drupalpractice]
