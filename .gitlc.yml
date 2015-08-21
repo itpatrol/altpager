@@ -10,3 +10,4 @@ deploy:
         account-mail: "gor.martsen@gmail.com"
         site-name: "Alt pager example"
         site-mail: "noreply@{domainname}"
+    after: '{deploy_dir}/scripts/after_deploy.sh'
