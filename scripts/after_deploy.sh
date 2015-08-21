@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd #GITLC_DOCROOT
+cd $GITLC_DOCROOT
 drush dl devel
 drush en devel -y
 drush en devel_generate -y
