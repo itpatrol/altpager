@@ -1,2 +1,12 @@
-coding_standards:
-  name: [codespell, drupal, drupalpractice, drupalsecure]
+code_style:
+  default: [codespell,drupal,drupalpractice]
+deploy:
+  test:
+    robin: TRUE
+    type:
+      name: "drupal-7"
+      settings:
+        account-name: "root"
+        account-mail: "gor.martsen@gmail.com"
+        site-name: "Alt pager example"
+        site-mail: "noreply@{domainname}"
