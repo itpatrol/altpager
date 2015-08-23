@@ -1,13 +1,2 @@
 code_style:
   default: [codespell,drupal,drupalpractice]
-deploy:
-  master:
-    robin: TRUE
-    type:
-      name: "drupal-7"
-      settings:
-        account-name: "root"
-        account-mail: "gor.martsen@gmail.com"
-        site-name: "Alt pager example"
-        site-mail: "noreply@{domainname}"
-    after: '{deploy_dir}/scripts/after_deploy.sh'
