@@ -107,19 +107,19 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
    */
   function options_form(&$form, &$form_state) {
     $form['quantity'] = array(
-      '#type' => 'checkbox',
+      '#type' => 'textfield',
       '#title' => t('Items on first page'),
       '#description' => t('How many items display on first page.'),
       '#default_value' => !empty($this->handler->options['quantity']),
     );
     $form['step'] = array(
-      '#type' => 'checkbox',
+      '#type' => 'textfield',
       '#title' => t('Page step'),
       '#description' => t('How many items display on each step.'),
       '#default_value' => !empty($this->handler->options['step']),
     );
     $form['pages'] = array(
-      '#type' => 'checkbox',
+      '#type' => 'textfield',
       '#title' => t('Pages'),
       '#description' => t('How many pages to generate.'),
       '#default_value' => !empty($this->handler->options['pages']),
