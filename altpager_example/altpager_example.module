@@ -25,7 +25,7 @@ function altpager_example_menu() {
  */
 function altpager_example_views_api() {
   return array(
-    'api' => 3,
+    'api' => 3.0,
     'path' => backdrop_get_path('module', 'altpager_example') . '/views',
   );
 }

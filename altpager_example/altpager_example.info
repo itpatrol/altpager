@@ -3,5 +3,4 @@ description = Example work module.
 backdrop = 1.x
 type = module
 
-files[] = views/altpager_example.views_default.inc
 dependencies[] = altpager
