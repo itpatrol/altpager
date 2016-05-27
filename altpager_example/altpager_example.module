@@ -53,7 +53,8 @@ function altpager_example_page() {
 
   foreach ($nids as $row) {
     $node = node_load($row->nid);
-    $result .= render(node_view($node));
+    $node_view = node_view($node);
+    $result .= render($node_view);
   }
 
   $result .= theme('altpager');
