@@ -9,12 +9,23 @@
  */
 
 /**
+ * Implements hook_autoload_info().
+ */
+function altpager_autoload_info() {
+  return array(
+    'SearchQuery' => 'altpager.extender.inc',
+    'views_plugin_pager_altpager' => 'views/views_plugin_pager_altpager.inc',
+  );
+}
+
+
+/**
  * Implementation of hook_views_api().
  */
 function altpager_views_api() {
   return array(
-    'api' => '3',
-    'path' => drupal_get_path('module', 'altpager') . '/includes/views',
+    'api' => '3.0',
+    'path' => backdrop_get_path('module', 'altpager') . '/views',
   );
 }
 
