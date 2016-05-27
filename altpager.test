@@ -8,7 +8,7 @@
 /**
  * Test the module functions.
  */
-class AltpagerTestCase extends DrupalWebTestCase {
+class AltpagerTestCase extends BackdropWebTestCase {
 
   public static function getInfo() {
     return array(
