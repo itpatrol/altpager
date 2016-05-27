@@ -28,7 +28,7 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
       $pages = $this->options['pages'];
     }
     
-    return t('Altpage, Start with !quantity, step !step and !pages pages max', array ('!quantity' > $quantity, '!step' => $step, '!pages' => $pages));
+    return t('Altpage, Start with !quantity, step !step and !pages pages max', array ('!quantity' => $quantity, '!step' => $step, '!pages' => $pages));
   }
 
   /**
