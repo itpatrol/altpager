@@ -66,7 +66,7 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
 
     if($max_count > $quantity) {
       $pager_steps = array(); 
-      $pager_steps[$quantity] = $this->options[$quantity];
+      $pager_steps[$quantity] = $quantity;
       
       $page_count = $quantity;
       while($pages > 0) {
