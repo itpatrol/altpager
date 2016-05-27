@@ -110,19 +110,19 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
       '#type' => 'textfield',
       '#title' => t('Items on first page'),
       '#description' => t('How many items display on first page.'),
-      '#default_value' => !empty($this->handler->options['quantity']),
+      '#default_value' => $this->handler->options['quantity'],
     );
     $form['step'] = array(
       '#type' => 'textfield',
       '#title' => t('Page step'),
       '#description' => t('How many items display on each step.'),
-      '#default_value' => !empty($this->handler->options['step']),
+      '#default_value' => $this->handler->options['step'],
     );
     $form['pages'] = array(
       '#type' => 'textfield',
       '#title' => t('Pages'),
       '#description' => t('How many pages to generate.'),
-      '#default_value' => !empty($this->handler->options['pages']),
+      '#default_value' => $this->handler->options['pages'],
     );
   }
 
