@@ -12,7 +12,23 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
    * Summary title overwrite.
    */
   function summary_title() {
-    return t('Without settings.');
+
+    $quantity = 10;
+    if(isset($this->options['quantity'])) {
+      $quantity = $this->options['quantity'];
+    }
+
+    $step = 10;
+    if(isset($this->options['step'])) {
+      $step = $this->options['step'];
+    }
+
+    $pages = 10;
+    if(isset($this->options['pages'])) {
+      $pages = $this->options['pages'];
+    }
+    
+    return t('Altpage, Start with !quantity, step !step and !pages pages max', array ('!quantity' > $quantity, '!step' => $step, '!pages' => $pages));
   }
 
   /**
@@ -26,14 +42,47 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
    * Pre execute overwrite.
    */
   function pre_execute(&$query) {
+    
     // Count all entries.
     $max_count = $query
       ->countQuery()
       ->execute()
       ->fetchField();
 
+    $quantity = 10;
+    if(isset($this->options['quantity'])) {
+      $quantity = $this->options['quantity'];
+    }
+
+    $step = 10;
+    if(isset($this->options['step'])) {
+      $step = $this->options['step'];
+    }
+
+    $pages = 10;
+    if(isset($this->options['pages'])) {
+      $pages = $this->options['pages'];
+    }
+
+    if($max_count > $quantity) {
+      $pager_steps = array(); 
+      $pager_steps[$quantity] = $this->options[$quantity];
+      
+      $page_count = $quantity;
+      while($pages > 0) {
+        $pages--;
+        if( $page_count + $step > $max_count) {
+          break;
+        }
+        $page_count = $page_count + $step;
+        $pager_steps[$page_count] = $page_count;
+      }
+      altpager_items_elements($pager_steps);
+    }
+
     // Save data count all entries.
     altpager_count_all_items($max_count);
+    
 
     // Count viewed.
     $count_items = altpager_count_items_viewed();
@@ -46,7 +95,11 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
    * Options definition overwrite.
    */
   function option_definition() {
-    return array();
+    return array(
+      'quantity' => 10,
+      'step' => 10,
+      'pages' => 5,
+    );
   }
 
   /**
