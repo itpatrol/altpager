@@ -27,7 +27,7 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
     if(isset($this->options['pages'])) {
       $pages = $this->options['pages'];
     }
-    
+
     return t('Altpage, Start with !quantity, step !step and !pages pages max', array ('!quantity' => $quantity, '!step' => $step, '!pages' => $pages));
   }
 
@@ -42,7 +42,7 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
    * Pre execute overwrite.
    */
   function pre_execute(&$query) {
-    
+
     // Count all entries.
     $max_count = $query
       ->countQuery()
@@ -65,9 +65,9 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
     }
 
     if($max_count > $quantity) {
-      $pager_steps = array(); 
+      $pager_steps = array();
       $pager_steps[$quantity] = $quantity;
-      
+
       $page_count = $quantity;
       while($pages > 0) {
         $pages--;
@@ -82,7 +82,7 @@ class views_plugin_pager_altpager extends views_plugin_pager_mini {
 
     // Save data count all entries.
     altpager_count_all_items($max_count);
-    
+
 
     // Count viewed.
     $count_items = altpager_count_items_viewed();
