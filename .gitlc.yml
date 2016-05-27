@@ -1,2 +1,9 @@
-code_style:
-  default: [codespell,drupal,drupalpractice]
+deploy:
+  master:
+    server: 192.99.57.50
+    username: billing
+    dir: '{home}/github/Gormartsen/altpager/{branch}'
+    env_vars:
+      domain: billingcloud.cc
+    scripts:
+      init: '{home}/scripts/module_init.sh'

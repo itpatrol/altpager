@@ -1,7 +1,7 @@
 name = Alternative Pager ( Example )
 description = Example work module.
-dependencies[] = altpager
-configure = altpager_example
-core = 7.x
+backdrop = 1.x
+type = module
 
 files[] = views/altpager_example.views_default.inc
+dependencies[] = altpager

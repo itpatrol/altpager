@@ -1,6 +1,8 @@
 name = Alternative Pager
 description = API for alternative pager. It is alternative view point on Pager functionality.
-core = 7.x
+backdrop = 1.x
+type = module
+
 files[] = altpager.extender.inc
 files[] = altpager.test
 

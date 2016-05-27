@@ -26,8 +26,7 @@ class AltPager extends SelectQueryExtender {
    * to it.
    */
   public function execute() {
-    $max_count = $this
-      ->query
+    $max_count = $this->query
       ->countQuery()
       ->execute()
       ->fetchField();
