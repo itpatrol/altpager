@@ -8,6 +8,7 @@ deploy:
       init: '{depoloy_dir}/init_deploy.sh '
 test:
   php5:
-    box: 'backdrop-php53'
-    dir: '{home}/test'
+    master:
+      box: 'backdrop-php53'
+      dir: '{home}/test'
     
