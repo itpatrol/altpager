@@ -9,4 +9,5 @@ deploy:
 test:
   php5:
     box: 'backdrop-php53'
+    dir: '{home}/test'
     
