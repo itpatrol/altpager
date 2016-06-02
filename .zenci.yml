@@ -1,0 +1,12 @@
+deploy:
+  master:
+    server: test
+    username: test
+    dir: '{home}/test'
+    env_vars:
+    scripts:
+      init: '{depoloy_dir}/init_deploy.sh '
+test:
+  php5:
+    box: 'backdrop-php53'
+    
