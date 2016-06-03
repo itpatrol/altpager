@@ -9,6 +9,11 @@ deploy:
 test:
   php5:
     master:
-      box: 'backdrop-php53'
+      box: 
+        machine: dual
+        image: 'backdrop-php53'
+        disk:
+          type: HDD
+          size: 10
       dir: '{home}/test'
     
