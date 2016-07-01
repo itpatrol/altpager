@@ -20,10 +20,10 @@ div.altpager ul li.active {
   border-bottom: 1px solid #ccc;
 }
 
-div.altpager ul li  a {
+div.altpager ul li a {
   text-decoration: none;
 }
 
-div.altpager ul li  a:hover {
+div.altpager ul li a:hover {
   color: green;
 }

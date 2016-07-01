@@ -11,7 +11,7 @@
 class AltPager extends SelectQueryExtender {
 
   /**
-   *
+   * Constructor. AddTag for Altpager Extension.
    */
   public function __construct(SelectQueryInterface $query, DatabaseConnection $connection) {
     parent::__construct($query, $connection);
@@ -26,8 +26,7 @@ class AltPager extends SelectQueryExtender {
    * to it.
    */
   public function execute() {
-    $max_count = $this
-      ->query
+    $max_count = $this->query
       ->countQuery()
       ->execute()
       ->fetchField();

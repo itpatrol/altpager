@@ -25,8 +25,8 @@ function altpager_example_menu() {
  */
 function altpager_example_views_api() {
   return array(
-    'api' => 3,
-    'path' => drupal_get_path('module', 'altpager_example') . '/views',
+    'api' => 3.0,
+    'path' => backdrop_get_path('module', 'altpager_example') . '/views',
   );
 }
 
@@ -53,7 +53,8 @@ function altpager_example_page() {
 
   foreach ($nids as $row) {
     $node = node_load($row->nid);
-    $result .= render(node_view($node));
+    $node_view = node_view($node);
+    $result .= render($node_view);
   }
 
   $result .= theme('altpager');
